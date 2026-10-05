@@ -2,7 +2,7 @@ name: Upri Sales Bot
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "3-58/5 * * * *"
   workflow_dispatch:
     inputs:
       mode:
