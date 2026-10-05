@@ -1,0 +1,50 @@
+name: Upri Sales Bot
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "normal = post new sales, test = post the latest sale of each collection as [TEST]"
+        default: normal
+        type: choice
+        options: [normal, test]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upri-sales-bot
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check sales
+        env:
+          WEBHOOK_UPRIWORLD_SERVER_SALES: ${{ secrets.WEBHOOK_UPRIWORLD_SERVER_SALES }}
+          WEBHOOK_UPRIVERSE_UPRIWORLD_SALES: ${{ secrets.WEBHOOK_UPRIVERSE_UPRIWORLD_SALES }}
+          WEBHOOK_UPRIVERSE_UPRIMUTANT_SALES: ${{ secrets.WEBHOOK_UPRIVERSE_UPRIMUTANT_SALES }}
+        run: |
+          if [ "${{ inputs.mode }}" = "test" ]; then
+            node index.mjs --test
+          else
+            node index.mjs
+          fi
+
+      - name: Save progress
+        if: always() && inputs.mode != 'test'
+        run: |
+          git config user.name "upri-sales-bot"
+          git config user.email "upri-sales-bot@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet || (git commit -m "Update sales state" && git push)
