@@ -197,10 +197,8 @@ async function deliver(collKey, message) {
   const targets = config.routes.filter((r) => r.collections.includes(collKey));
   for (const r of targets) {
     const url = process.env[r.webhookEnv];
-    if (!url) {
-      console.log(`  skip ${r.webhookEnv} (not set)`);
-      continue;
-    }
+    // A missing secret must fail the run, otherwise the sale is marked seen without ever being posted.
+    if (!url) throw new Error(`${r.webhookEnv} is not set (add it under Settings → Secrets and variables → Actions)`);
     await postWebhook(url, message);
     console.log(`  posted to ${r.webhookEnv}`);
     await sleep(1000);
