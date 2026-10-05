@@ -1,0 +1,32 @@
+{
+  "lcd": [
+    "https://cosmos-rest.publicnode.com",
+    "https://rest.cosmos.directory/cosmoshub",
+    "https://cosmos-api.polkachu.com",
+    "https://rest-cosmoshub.ecostake.com",
+    "https://api.cosmos.nodestake.org"
+  ],
+  "ipfsGateways": [
+    "https://gateway.pinata.cloud/ipfs/",
+    "https://ipfs.io/ipfs/",
+    "https://dweb.link/ipfs/",
+    "https://w3s.link/ipfs/"
+  ],
+  "collections": {
+    "upriworld": {
+      "name": "Upriworld",
+      "address": "cosmos1ysxryhdmz7x3v2a9h72n5qe7xg2azgvymac53ra8n2fkrwd9l7qs9c2k0t",
+      "color": "#F1C40F"
+    },
+    "uprimutant": {
+      "name": "UpriMutant",
+      "address": "cosmos1zju9g4h4d4plw2fnxqvl5e8fy3dd9r29f2235uw5rzf7n7fvny7sz707s3",
+      "color": "#9B59B6"
+    }
+  },
+  "routes": [
+    { "webhookEnv": "WEBHOOK_UPRIWORLD_SERVER_SALES", "collections": ["upriworld", "uprimutant"] },
+    { "webhookEnv": "WEBHOOK_UPRIVERSE_UPRIWORLD_SALES", "collections": ["upriworld"] },
+    { "webhookEnv": "WEBHOOK_UPRIVERSE_UPRIMUTANT_SALES", "collections": ["uprimutant"] }
+  ]
+}

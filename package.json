@@ -1,0 +1,12 @@
+{
+  "name": "upri-sales-bot",
+  "private": true,
+  "type": "module",
+  "description": "Posts Upriworld and UpriMutant sales on Stargaze (Cosmos Hub) to Discord webhooks.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node index.mjs",
+    "dry-run": "node index.mjs --dry-run",
+    "test-post": "node index.mjs --test"
+  }
+}
